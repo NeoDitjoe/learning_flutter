@@ -1,0 +1,76 @@
+import 'package:english_words/english_words.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => MyAppState(),
+      child: MaterialApp(
+        title: 'Namer App',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+        ),
+        home: MyHomePage(),
+      ),
+    );
+  }
+}
+
+class MyAppState extends ChangeNotifier {
+  var current = WordPair.random();
+  var name = 'Neo';
+  int _counter = 0;
+
+  int get counter => _counter;
+
+  void getN() {
+    _counter++;
+    current = WordPair.random();
+    notifyListeners();
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var pair = appState.current;
+
+    return Scaffold(
+      body: Column(
+        children: [
+          Text('${appState._counter}. ${pair.asLowerCase}'), 
+          Text('Name: ${appState.name}'),
+          // BigCard(pair: pair)
+          ElevatedButton(
+            onPressed: () {
+              appState.getN();
+            },
+            child: Text('Click me'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// class BigCard extends StatelessWidget {
+//   const BigCard({
+//     key? key,
+//     required this.pair
+//   }) : super(key: key)
+
+//   final WordPair pair
+//   @override
+//   Widget build(BuildContext context){
+//     return Text(pair.asLowerCase)
+//   }
+// }
