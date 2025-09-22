@@ -90,6 +90,7 @@ class MyHomePage extends StatelessWidget {
           Image(
             image: NetworkImage(appState.imageList[appState._counter])
           ),
+          Image.asset('assets/me.jpg'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
