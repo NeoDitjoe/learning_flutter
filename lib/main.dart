@@ -46,7 +46,6 @@ class MyAppState extends ChangeNotifier {
       _counter = 0;
     };
 
-    current = WordPair.random();
     notifyListeners();
   }
 
@@ -57,6 +56,10 @@ class MyAppState extends ChangeNotifier {
       _counter = imageList.length - 1;
     };
 
+    notifyListeners();
+  }
+
+  void randomWord(){
     current = WordPair.random();
     notifyListeners();
   }
@@ -76,6 +79,7 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Colors.red[200]
       ),
       body: Column(
+        // color: Colors.blue[200],
         children: [
           Text('${appState._counter}. ${pair.asLowerCase}'), 
           Text(
@@ -87,18 +91,52 @@ class MyHomePage extends StatelessWidget {
             )
           ),
           BigCard(pair: pair),
+          // FloatingActionButton(
+          //   onPressed: () {
+          //     appState.randomWord();
+          //   },
+          //   child: const Icon(Icons.add), // The icon displayed on the button
+          // ),
+          Image.asset(
+            'assets/me.jpg',
+            fit: BoxFit.cover, // optional
+          ),
           Image(
             image: NetworkImage(appState.imageList[appState._counter])
           ),
-          Image.asset('assets/me.jpg'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Icon(
+                Icons.favorite,
+                color: Colors.pink,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
+              ),
+              Icon(
+                Icons.audiotrack,
+                color: Colors.green,
+                size: 30.0,
+              ),
+              Icon(
+                Icons.beach_access,
+                color: Colors.blue,
+                size: 36.0,
+                //                 onPressed: () {
+                //   console.log('hii ther');
+                // },
+              ),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
+              ElevatedButton.icon(
+                icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   appState.subtract();
                 }, 
-                child: Text('Back'),
+                label: Text('Back'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[400], // Background color
                     foregroundColor: Colors.white, // Text/icon color
@@ -114,7 +152,14 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   appState.add();
                 },
-                child: Text('Next'),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min, // 👈 keeps button compact
+                  children: [
+                    Text('Next'), // text first
+                    SizedBox(width: 6), // space between text and icon
+                    Icon(Icons.arrow_forward), // icon last
+                  ],
+                ),
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.green[400], // Text/icon color
                     shape: RoundedRectangleBorder( // Rounded corners
@@ -125,25 +170,20 @@ class MyHomePage extends StatelessWidget {
                   ),
               ),
             ],
-          )
-    
-          // PopupMenuButton<String>(
-          //   onSelected: (String result) {
-          //     // Handle menu item selection
-          //     print('You selected $result');
-          //   },
-          //   itemBuilder: (BuildContext context) {
-          //     return menuItems.map((String item) {
-          //       return PopupMenuItem<String>(
-          //         value: item,
-          //         child: Text(item),
-          //       );
-          //     }).toList();
-          //   },
-          // ),
-          
+          ),
         ],
       ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          appState.randomWord();
+        },
+        child: const Icon(Icons.accessible_forward_rounded),
+      ),
+
+      // ✅ POSITION IT (bottom right)
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+  
     );
   }
 }
