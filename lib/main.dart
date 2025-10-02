@@ -78,102 +78,103 @@ class MyHomePage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.red[200]
       ),
-      body: Column(
-        // color: Colors.blue[200],
-        children: [
-          Text('${appState._counter}. ${pair.asLowerCase}'), 
-          Text(
-            "${appState.name}'s App",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.green[200]
-            )
-          ),
-          BigCard(pair: pair),
-          // FloatingActionButton(
-          //   onPressed: () {
-          //     appState.randomWord();
-          //   },
-          //   child: const Icon(Icons.add), // The icon displayed on the button
-          // ),
-          Image.asset(
-            'assets/me.jpg',
-            fit: BoxFit.cover, // optional
-          ),
-          Image(
-            image: NetworkImage(appState.imageList[appState._counter])
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Icon(
-                Icons.favorite,
-                color: Colors.pink,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              ),
-              Icon(
-                Icons.audiotrack,
-                color: Colors.green,
-                size: 30.0,
-              ),
-              Icon(
-                Icons.beach_access,
-                color: Colors.blue,
-                size: 36.0,
-                //                 onPressed: () {
-                //   console.log('hii ther');
-                // },
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton.icon(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  appState.subtract();
-                }, 
-                label: Text('Back'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[400], // Background color
-                    foregroundColor: Colors.white, // Text/icon color
-                    shape: RoundedRectangleBorder( // Rounded corners
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Padding
-                    elevation: 5, // Shadow elevation
-                  ),
-              ),
-              SizedBox(width: 16), // <-- Add space here (16px)
-              OutlinedButton(
-                onPressed: () {
-                  appState.add();
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min, // 👈 keeps button compact
-                  children: [
-                    Text('Next'), // text first
-                    SizedBox(width: 6), // space between text and icon
-                    Icon(Icons.arrow_forward), // icon last
-                  ],
+      body: SingleChildScrollView( 
+        child: Column(
+          // color: Colors.blue[200],
+          children: [
+            Text('${appState._counter}. ${pair.asLowerCase}'), 
+            Text(
+              "${appState.name}'s App",
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.green[200]
+              )
+            ),
+            BigCard(pair: pair),
+            // FloatingActionButton(
+            //   onPressed: () {
+            //     appState.randomWord();
+            //   },
+            //   child: const Icon(Icons.add), // The icon displayed on the button
+            // ),
+            Image.asset(
+              'assets/me.jpg',
+              fit: BoxFit.cover, // optional
+            ),
+            Image(
+              image: NetworkImage(appState.imageList[appState._counter])
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Icon(
+                  Icons.favorite,
+                  color: Colors.pink,
+                  size: 24.0,
+                  semanticLabel: 'Text to announce in accessibility modes',
                 ),
-                style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.green[400], // Text/icon color
-                    shape: RoundedRectangleBorder( // Rounded corners
-                      borderRadius: BorderRadius.circular(10),
+                Icon(
+                  Icons.audiotrack,
+                  color: Colors.green,
+                  size: 30.0,
+                ),
+                Icon(
+                  Icons.beach_access,
+                  color: Colors.blue,
+                  size: 36.0,
+                  //                 onPressed: () {
+                  //   console.log('hii ther');
+                  // },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton.icon(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    appState.subtract();
+                  }, 
+                  label: Text('Back'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[400], // Background color
+                      foregroundColor: Colors.white, // Text/icon color
+                      shape: RoundedRectangleBorder( // Rounded corners
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Padding
+                      elevation: 5, // Shadow elevation
                     ),
-                    // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Padding
-                    elevation: 5, // Shadow elevation
+                ),
+                SizedBox(width: 16), // <-- Add space here (16px)
+                OutlinedButton(
+                  onPressed: () {
+                    appState.add();
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min, // 👈 keeps button compact
+                    children: [
+                      Text('Next'), // text first
+                      SizedBox(width: 6), // space between text and icon
+                      Icon(Icons.arrow_forward), // icon last
+                    ],
                   ),
-              ),
-            ],
-          ),
-        ],
+                  style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.green[400], // Text/icon color
+                      shape: RoundedRectangleBorder( // Rounded corners
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      // padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Padding
+                      elevation: 5, // Shadow elevation
+                    ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           appState.randomWord();
@@ -198,7 +199,7 @@ class BigCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(pair.asLowerCase),
+        child: Text(WordPair),
       ),
     );
   }
