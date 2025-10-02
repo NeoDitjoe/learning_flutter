@@ -28,13 +28,21 @@ class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
   var name = 'Neo';
   int _counter = 0;
-  var imageList = [
+  List imageList = [
     'https://plus.unsplash.com/premium_photo-1699210579032-a071593b44db?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1674886270935-bf16a0b15daa?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1674886271082-01dcc2e05375?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1674886271428-9e25ff55aae2?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1699708592737-3ea087278fd9?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1699708592731-49fca14da7d0?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  ];
+
+  List people = [
+    {"name": "Alice", "surname": "Smith", "age": 25},
+    {"name": "Bob", "surname": "Johnson", "age": 30},
+    {"name": "Charlie", "surname": "Brown", "age": 22},
+    {"name": "Diana", "surname": "Miller", "age": 28},
+    {"name": "Ethan", "surname": "Taylor", "age": 35},
   ];
 
   int get counter => _counter;
@@ -102,6 +110,7 @@ class MyHomePage extends StatelessWidget {
               'assets/me.jpg',
               fit: BoxFit.cover, // optional
             ),
+            SizedBox(height: 20),
             Image(
               image: NetworkImage(appState.imageList[appState._counter])
             ),
@@ -172,6 +181,44 @@ class MyHomePage extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 400, // give it some fixed height
+              child: GridView.builder(
+                padding: const EdgeInsets.all(8),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                ),
+                itemCount: appState.imageList.length,
+                itemBuilder: (context, index) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      appState.imageList[index],
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 20),
+            Column(
+              children: appState.people.map((person) {
+                return Card(
+                  margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Text(person["name"][0]), // first letter of the name
+                    ),
+                    title: Text("${person["name"]} ${person["surname"]}"),
+                    subtitle: Text("Age: ${person["age"]}"),
+                  ),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -199,7 +246,7 @@ class BigCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(WordPair),
+        child: Text(pair.asLowerCase),
       ),
     );
   }
